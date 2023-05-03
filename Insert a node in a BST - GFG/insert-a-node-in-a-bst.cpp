@@ -119,7 +119,7 @@ Node* insert(Node* root, int val) {
     Node* curr = root;
     while(true) {
         if(curr -> data > val) {
-            if(curr -> left != NULL) {
+            if(curr -> left) {
                 curr = curr -> left;
             }
             else {
@@ -128,7 +128,7 @@ Node* insert(Node* root, int val) {
             }
         }
         else if(curr -> data < val) {
-            if(curr -> right != NULL) {
+            if(curr -> right) {
                 curr = curr -> right;
             }
             else {
