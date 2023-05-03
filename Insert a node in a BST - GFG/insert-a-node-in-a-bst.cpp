@@ -124,7 +124,7 @@ Node* insert(Node* root, int val) {
             }
             else {
                 curr -> left = new Node(val);
-                break;
+                return root;
             }
         }
         else if(curr -> data < val) {
@@ -133,7 +133,7 @@ Node* insert(Node* root, int val) {
             }
             else {
                 curr -> right = new Node(val);
-                break;
+                return root;
             }
         }
         else {
