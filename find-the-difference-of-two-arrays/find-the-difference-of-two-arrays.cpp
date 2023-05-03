@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<vector<int>> findDifference(vector<int>& nums1, vector<int>& nums2) {
-        unordered_set<int> s1, s2;
+        unordered_set<int> s1, s2, s3, s4;
         vector<vector<int>> ans;
         vector<int> ans1, ans2;
         for(int i : nums1) {
