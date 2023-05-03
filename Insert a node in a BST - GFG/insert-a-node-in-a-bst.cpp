@@ -113,7 +113,7 @@ int main() {
 
 // } Driver Code Ends
 Node* insert(Node* root, int val) {
-    if(root == NULL) {
+    if(!root) {
         return new Node(val);
     }
     Node* curr = root;
