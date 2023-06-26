@@ -15,24 +15,12 @@ public:
         if(!root) {
             return 0;
         }
-        int lDepth=0, rDepth=0;
-        if(root->left) {
-            lDepth = minDepth(root->left);
+        if(!root->left) {
+            return 1+minDepth(root->right);
         }
-        if(root->right) {
-            rDepth = minDepth(root->right);
+        if(!root->right) {
+            return 1+minDepth(root->left);
         }
-        if(!lDepth && !rDepth) {
-            return 1;
-        }
-        else if(!lDepth && rDepth) {
-            return 1+rDepth;
-        }
-        else if(lDepth && !rDepth) {
-            return 1+lDepth;
-        }
-        else {
-            return 1+min(lDepth,rDepth);
-        }
+        return 1+min(minDepth(root->left),minDepth(root->right));
     }
 };
