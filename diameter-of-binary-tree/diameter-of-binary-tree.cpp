@@ -30,7 +30,7 @@ public:
     int diameterOfBinaryTree(TreeNode* root) {
         int ans = -1;
         if(!root) {
-            return ans+1;
+            return ans;
         }
         DiaCalc(root,ans);
         return ans;
