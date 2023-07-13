@@ -11,15 +11,6 @@
  */
 class Solution {
 private:
-    // bool isEqual(TreeNode* l, TreeNode* r) {
-    //     if(!l && !r) {
-    //         return true;
-    //     }
-    //     if((!l && r) || (l && !r)) {
-    //         return false;
-    //     }
-    //     return ();
-    // }
     bool check(TreeNode* l, TreeNode* r) {
             if(!l && !r) {
             return (l==r);
