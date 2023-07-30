@@ -7,21 +7,17 @@ class Solution{
 	public:
 		vector<string> AllPossibleStrings(string s){
 		    vector<string> ans;
-		    ans.push_back(s);
 		    int n = s.size();
-		    for(int i=0; i<((1<<n)-1); i++) {
+		    for(int i=1; i<(1<<n); i++) {
 		        string subseq = "";
 		        for(int j=0; j<n; j++) {
 		            if(i & 1<<j) {
 		                subseq += s[j];
 		            }
 		        }
-		        if(subseq!="" ) {
-		            ans.push_back(subseq);
-		        }
+		        ans.push_back(subseq);
 		    }
 		    sort(ans.begin(),ans.end());
-		    
 		    return ans;
 		}
 };
