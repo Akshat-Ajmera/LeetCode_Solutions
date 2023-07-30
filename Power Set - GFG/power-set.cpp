@@ -4,19 +4,24 @@ using namespace std;
 
 // } Driver Code Ends
 class Solution{
+    private:
+        void solve(vector<string> &ans, string s, int ind, string &subseq) {
+            if(ind >= s.size()) {
+                ans.push_back(subseq);
+                return;
+            }
+            subseq.push_back(s[ind]);
+            solve(ans,s,ind+1,subseq);
+            subseq.pop_back();
+            solve(ans,s,ind+1,subseq);
+        }
 	public:
 		vector<string> AllPossibleStrings(string s){
 		    vector<string> ans;
-		    int n = s.size();
-		    for(int i=1; i<(1<<n); i++) {
-		        string subseq = "";
-		        for(int j=0; j<n; j++) {
-		            if(i & 1<<j) {
-		                subseq += s[j];
-		            }
-		        }
-		        ans.push_back(subseq);
-		    }
+		    string subseq = "";
+		    int ind = 0;
+		    solve(ans,s,ind,subseq);
+		    ans.pop_back();
 		    sort(ans.begin(),ans.end());
 		    return ans;
 		}
