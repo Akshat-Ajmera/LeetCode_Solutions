@@ -16,19 +16,22 @@ class Solution {
 //     }
 public:
     int rob(vector<int>& nums) {
-        int n = nums.size(), p, np;
+        int n = nums.size(), p=0, np=0, slast=0, last=0, ans=0;
         if(n==1) {
             return nums[0];
         }
-        vector<int> dp(n,-1);
+        // vector<int> dp(n,-1);
         // return solve(nums,dp,n-1);
-        dp[0] = nums[0];
-        dp[1] = max(nums[0],nums[1]);
+        slast = nums[0];
+        last = max(nums[0],nums[1]);
+        ans = max(slast,last);
         for(int i=2; i<n; i++) {
-            p = nums[i] + dp[i-2];
-            np = dp[i-1];
-            dp[i] = max(p,np);
+            p = nums[i] + slast;
+            np = last;
+            ans = max(p,np);
+            slast = last;
+            last = ans;
         }
-        return dp[n-1];
+        return ans;
     }
 };
