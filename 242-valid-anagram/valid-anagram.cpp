@@ -5,15 +5,13 @@ public:
         if(n1 != n2) {
             return false;
         }
-        vector<int> v(26,0);
+        map<char,int> mp;
         for(int i=0; i<n1; i++) {
-            v[s[i]-'a']++;
+            mp[s[i]]++;
+            mp[t[i]]--;
         }
-        for(int i=0; i<n2; i++) {
-            v[t[i]-'a']--;
-        }
-        for(int i=0; i<26; i++) {
-            if(v[i]) {
+        for(auto it : mp) {
+            if(it.second) {
                 return false;
             }
         }
