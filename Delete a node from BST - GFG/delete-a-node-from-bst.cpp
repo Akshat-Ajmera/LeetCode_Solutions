@@ -175,5 +175,13 @@ Node* deleteNode(Node *root, int x) {
             parent->right = node->right;
         }
     }
+    else {
+        if(lCheck) {
+            parent->left = NULL;
+        }
+        else {
+            parent->right = NULL;
+        }
+    }
     return Root;
 }
