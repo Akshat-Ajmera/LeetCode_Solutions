@@ -1,1 +1,1 @@
-<h2>equal-row-and-column-pairs Notes</h2><hr>hash the row vectors in 
+<h2>equal-row-and-column-pairs Notes</h2><hr>hash the row vectors in a map, convert each col vector into a 
