@@ -1,1 +1,1 @@
-<h2>equal-row-and-column-pairs Notes</h2><hr>hash the row vectors in a map, convert each col vector into a row vector and find it in the map, 
+<h2>equal-row-and-column-pairs Notes</h2><hr>hash the row vectors in a map, convert each col vector into a row vector and find it in the map, if present inc the a
