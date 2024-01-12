@@ -14,19 +14,16 @@ public:
         if(!head || !(head->next)) {
             return head;
         }
-        ListNode* temp = NULL;
+        ListNode* prevNode = NULL;
+        ListNode* nextNode = head->next;
         ListNode* curr = head;
-        stack<int> st;
-        while(curr) {
-            st.push(curr->val);
-            curr = curr->next;
+        while(nextNode) {
+            curr->next = prevNode;
+            prevNode = curr;
+            curr = nextNode;
+            nextNode = nextNode->next;
         }
-        curr = head;
-        while(curr) {
-            curr->val = st.top();
-            st.pop();
-            curr = curr->next;
-        }
-        return head;
+        curr->next = prevNode;
+        return curr;
     }
 };
