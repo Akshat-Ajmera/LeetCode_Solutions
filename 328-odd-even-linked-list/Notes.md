@@ -1,1 +1,1 @@
-<h2>odd-even-linked-list Notes</h2><hr>connect odd nodes i
+<h2>odd-even-linked-list Notes</h2><hr>connect odd nodes with 
