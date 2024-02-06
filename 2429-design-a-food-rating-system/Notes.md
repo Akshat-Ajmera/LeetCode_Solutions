@@ -1,1 +1,1 @@
-<h2>design-a-food-rating-system Notes</h2><hr>searching in a map like this :  mp[val to be searched] takes O(1) 
+<h2>design-a-food-rating-system Notes</h2><hr>searching in a map like this :  mp[val to be searched] takes O(1) time always.
