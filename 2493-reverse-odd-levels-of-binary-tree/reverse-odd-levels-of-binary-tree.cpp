@@ -10,56 +10,19 @@
  * };
  */
 class Solution {
-private:
-    void reverseVal(vector<TreeNode*> &v) {
-        int n=v.size(), i=0, j=n-1;
-        while(i<j) {
-            int temp = v[i]->val;
-            v[i]->val = v[j]->val;
-            v[j]->val = temp;
-            i++;
-            j--;
-        }
-    }
 public:
+    void reverse(TreeNode* r1,TreeNode* r2,int level) {
+        if(!r1 || !r2) {
+            return;
+        }
+        if(level%2) {
+            swap(r1->val, r2->val);
+        }
+        reverse(r1->left, r2->right, level+1);
+        reverse(r2->left, r1->right, level+1);
+    }
     TreeNode* reverseOddLevels(TreeNode* root) {
-        if(!root) {
-            return root;
-        }
-        int cnt = 0;
-        queue<TreeNode*> que;
-        que.push(root);
-        while(!que.empty()) {
-            int siz = que.size();
-            if((cnt%2)) {
-                vector<TreeNode*> v(siz);
-                for(int i=0; i<siz; i++) {
-                    TreeNode* node = que.front();
-                    que.pop();
-                    if(node->left) {
-                        que.push(node->left);
-                    }
-                    if(node->right) {
-                        que.push(node->right);
-                    }
-                    v[i] = node;
-                }
-                reverseVal(v);
-            }
-            else {
-                for(int i=0; i<siz; i++) {
-                    TreeNode* node = que.front();
-                    que.pop();
-                    if(node->left) {
-                        que.push(node->left);
-                    }
-                    if(node->right) {
-                        que.push(node->right);
-                    }
-                }
-            }
-            cnt++;
-        }
+        reverse(root->left, root->right, 1);
         return root;
     }
 };
