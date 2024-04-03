@@ -1,7 +1,7 @@
 class Solution {
 private:
     bool calc(int bitmask, int player, int mxm, int tot, vector<vector<int>> &dp) {
-        if(tot <= 0) return false;
+        if(tot <= 0) return true;
         if(dp[bitmask][player] != -1) return dp[bitmask][player];
         for(int i=0; i<mxm; i++) {
             if((1 << i) & bitmask) continue;
