@@ -1,45 +1,35 @@
 class Solution {
 private:
-    bool check(int row, int col, vector<string> &board) {
-        int n = board.size(), i = row, j = col;
-        while(j>=0) {
-            if(board[i][j] == 'Q') return false;
-            j--;
-        }
-        i = row, j = col;
-        while(i>=0 && j>=0) {
-            if(board[i][j] == 'Q') return false;
-            i--;
-            j--;
-        }
-        i = row, j = col;
-        while(i<n && j>=0) {
-            if(board[i][j] == 'Q') return false;
-            i++;
-            j--;
-        }
-        return true;
+    bool check(int n, int row, int col, vector<int> &leftRow, vector<int> &upperDiag, vector<int> &lowerDiag) {
+        return !(leftRow[row] || upperDiag[n - 1 + col - row] || lowerDiag[row + col]);
     }
-    void solve(int col, vector<string> &board, vector<vector<string>> &ans) {
+    void solve(int col, vector<string> &board, vector<vector<string>> &ans, vector<int> &leftRow, vector<int> &upperDiag, vector<int> &lowerDiag) {
         int n = board.size();
         if(col == n) {
             ans.push_back(board);
             return;
         }
         for(int row=0; row<n; row++) {
-            if(!check(row, col, board)) continue;
+            if(!check(n, row, col, leftRow, upperDiag, lowerDiag)) continue;
             board[row][col] = 'Q';
-            solve(col + 1, board, ans);
+            leftRow[row] = 1;
+            lowerDiag[row + col] = 1;
+            upperDiag[n - 1 + col - row] = 1;
+            solve(col + 1, board, ans, leftRow, upperDiag, lowerDiag);
             board[row][col] = '.';
+            leftRow[row] = 0;
+            lowerDiag[row + col] = 0;
+            upperDiag[n - 1 + col - row] = 0;
         }
     }
 public:
     vector<vector<string>> solveNQueens(int n) {
         vector<vector<string>> ans;
         vector<string> board(n);
+        vector<int> leftRow(n, 0), upperDiag(2*n, 0), lowerDiag(2*n, 0);  
         string s(n, '.');
         for(int i=0; i<n; i++) board[i] = s;
-        solve(0, board, ans);
+        solve(0, board, ans, leftRow, upperDiag, lowerDiag);
         return ans;
     }
 };
