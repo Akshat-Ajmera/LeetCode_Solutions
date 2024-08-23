@@ -10,8 +10,8 @@ private:
         bool ans = false;
         if(ptn[m] == '.' || ptn[m] == str[n]) ans = solve(str, ptn, n-1, m-1);
         else if(ptn[m] == '*') {
-            if(ptn[m-1] == '.' || ptn[m-1] == str[n]) ans = solve(str, ptn, n-1, m) || solve(str, ptn, n-1, m-2) || solve(str, ptn, n, m-2);
-            else ans = solve(str, ptn, n, m-2);
+            if(ptn[m-1] == '.' || ptn[m-1] == str[n]) ans = solve(str, ptn, n-1, m) || solve(str, ptn, n-1, m-2);
+            ans = ans || solve(str, ptn, n, m-2);
         }
         return ans;
     }
