@@ -2,42 +2,26 @@ class Solution {
 public:
     int largestRectangleArea(vector<int>& h) {
         int n = h.size(), ans = 0;
-        vector<int> nextS(n), prevS(n);
-        stack<int> st1, st2;
-        for(int i=0; i<n; i++) {
-            while(!st1.empty() && h[i] <= h[st1.top()]) {
-                st1.pop();
-            }
-            if(st1.empty()) {
-                prevS[i] = -1;
-            }
-            else {
-                prevS[i] = st1.top();
-            }
-            st1.push(i);
-        }
+        vector<int> nse(n, n);
+        vector<int> pse(n, -1);
+        stack<int> stk;
         for(int i=n-1; i>=0; i--) {
-            while(!st2.empty() && h[i] <= h[st2.top()]) {
-                st2.pop();
+            if(!stk.empty()) {
+                while(!stk.empty() && h[i] <= h[stk.top()]) stk.pop();
+                if(!stk.empty()) nse[i] = stk.top();
             }
-            if(st2.empty()) {
-                nextS[i] = n;
+            stk.push(i);
+        }
+        while(!stk.empty()) stk.pop();
+        for(int i=0; i<n; i++) {
+            if(!stk.empty()) {
+                while(!stk.empty() && h[i] <= h[stk.top()]) stk.pop();
+                if(!stk.empty()) pse[i] = stk.top();
             }
-            else {
-                nextS[i] = st2.top();
-            }
-            st2.push(i);
+            stk.push(i);
         }
         for(int i=0; i<n; i++) {
-            cout << prevS[i] << " ";
-        }
-        cout << endl;
-        for(int i=0; i<n; i++) {
-            cout << nextS[i] << " ";
-        }
-        cout << endl;
-        for(int i=0; i<n; i++) {
-            ans = max(ans, (h[i]*(nextS[i]-prevS[i]-1)));
+            ans = max(ans, h[i] * (nse[i] - pse[i] - 1));
         }
         return ans;
     }
