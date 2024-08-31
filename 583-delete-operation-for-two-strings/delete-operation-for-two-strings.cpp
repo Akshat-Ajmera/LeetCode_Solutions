@@ -1,23 +1,19 @@
 class Solution {
 private:
-    int solve(string s1, string s2, vector<vector<int>> &dp, int n, int m) {
-        if(n<0 || m<0) {
-            return 0;
-        }
-        if(dp[n][m] != -1) {
-            return dp[n][m];
-        }
-        if(s1[n]==s2[m]) {
-            return dp[n][m] = 1 + solve(s1,s2,dp,n-1,m-1);
-        }
-        else {
-            return dp[n][m] = max(solve(s1,s2,dp,n-1,m),solve(s1,s2,dp,n,m-1));
-        }
+    int solve(string &s1, string &s2, int n1, int n2, vector<vector<int>> &dp) {
+        if(n1 < 0 && n2 < 0) return 0;
+        if(n1 < 0) return n2 + 1;
+        if(n2 < 0) return n1 + 1;
+        if(dp[n1][n2] != -1) return dp[n1][n2];
+        int ans;
+        if(s1[n1] == s2[n2]) ans = solve(s1, s2, n1-1, n2-1, dp);
+        else ans = 1 + min(solve(s1, s2, n1-1, n2, dp), solve(s1, s2, n1, n2-1, dp));
+        return dp[n1][n2] = ans;
     }
 public:
     int minDistance(string word1, string word2) {
-        int n = word1.size(), m = word2.size();
-        vector<vector<int>> dp(n, vector<int> (m, -1));
-        return m + n - 2*solve(word1,word2,dp,n-1,m-1);
+        int n1 = word1.size(), n2 = word2.size();
+        vector<vector<int>> dp(n1, vector<int> (n2, -1));
+        return solve(word1, word2, n1-1, n2-1, dp);
     }
 };
