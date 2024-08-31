@@ -1,4 +1,4 @@
-/*
+/**
  * Definition for a binary tree node.
  * struct TreeNode {
  *     int val;
@@ -11,43 +11,29 @@
  */
 class Solution {
 private:
-    void pathFinder(TreeNode* root, vector<int>& path, vector<vector<int>>& paths) {
-        if(!root) {
-            return;
+    void solve(TreeNode* node, vector<int> temp, vector<vector<int>> &paths) {
+        temp.push_back(node->val);
+        if(!node->left && !node->right) {
+            paths.push_back(temp);
         }
-        path.push_back(root->val);
-        if(root->left) {
-            pathFinder(root->left,path,paths);
-        }
-        if(root->right) {
-            pathFinder(root->right,path,paths);
-        }
-        if(!root->left && !root->right) {
-            paths.push_back(path);
-            path.pop_back();
-            return;
-        }
-        path.pop_back();
+        if(node->left) solve(node->left, temp, paths);
+        if(node->right) solve(node->right, temp, paths);
+        temp.pop_back();
+        return;
     }
 public:
     vector<string> binaryTreePaths(TreeNode* root) {
-        vector<string> ans;
-        if(!root) {
-            return ans;
-        }
-        string s = "";
-        vector<int> path;
         vector<vector<int>> paths;
-        pathFinder(root,path,paths);
-        int n=paths.size(), m;
-        for(int i=0; i<n; i++) {
-            m=paths[i].size();
-            s += to_string(root->val);
-            for(int j=1; j<m; j++) {
-                s += "->" + to_string(paths[i][j]);
+        vector<int> temp;
+        solve(root, temp, paths);
+        vector<string> ans(paths.size());
+        for(int i=0; i<ans.size(); i++) {
+            for(int j=0; j<paths[i].size(); j++) {
+                ans[i] += to_string(paths[i][j]);
+                ans[i] += "->";
             }
-            ans.push_back(s);
-            s="";
+            ans[i].pop_back();
+            ans[i].pop_back();
         }
         return ans;
     }
