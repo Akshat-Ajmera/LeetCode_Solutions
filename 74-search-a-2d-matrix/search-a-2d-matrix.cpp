@@ -1,13 +1,11 @@
 class Solution {
 public:
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
-        int m = matrix.size(), n = matrix[0].size(), lo = 0, hi = m*n - 1, mid, row, col;
-        while(lo <= hi) {
-            mid = lo + (hi - lo) / 2;
-            row = mid / n, col = mid % n;
+        int m = matrix.size(), n = matrix[0].size(), row = 0, col = n-1;
+        while(row < m && col >= 0) {
             if(matrix[row][col] == target) return true;
-            else if(matrix[row][col] > target) hi = mid - 1;
-            else lo = mid + 1;
+            else if(matrix[row][col] > target) col--;
+            else row++;
         }
         return false;
     }
