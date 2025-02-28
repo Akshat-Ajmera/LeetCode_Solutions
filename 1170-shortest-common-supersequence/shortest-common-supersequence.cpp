@@ -1,46 +1,40 @@
 class Solution {
 public:
-    string shortestCommonSupersequence(string s1, string s2) {
-        int m = s1.size(), n = s2.size();
+    string shortestCommonSupersequence(string str1, string str2) {
+        int m = str1.size(), n = str2.size();
+        string scs;
         vector<vector<int>> dp(m+1, vector<int> (n+1, 0));
         for(int i=1; i<=m; i++) {
             for(int j=1; j<=n; j++) {
-                if(s1[i-1] == s2[j-1]) {
-                    dp[i][j] = 1 + dp[i-1][j-1];
-                }
-                else {
-                    dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
-                }
-            } 
+                if(str1[i-1] == str2[j-1]) dp[i][j] = 1 + dp[i-1][j-1];
+                else dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+            }
         }
-        string ans = "";
-        int p = m, q = n;
-        while(p>0 && q>0) {
-            if(s1[p-1] == s2[q-1]) {
-                ans += s1[p-1];
-                p--;
-                q--;
+        int i = m, j = n;
+        while(i > 0 && j > 0) {
+            if(str1[i-1] == str2[j-1]) {
+                scs += str1[i-1];
+                i--;
+                j--;
+            }
+            else if(dp[i-1][j] >= dp[i][j-1]) {
+                scs += str1[i-1];
+                i--;
             }
             else {
-                if(dp[p-1][q] >= dp[p][q-1]) {
-                    ans += s1[p-1];
-                    p--;
-                }
-                else {
-                    ans += s2[q-1];
-                    q--;
-                }
+                scs += str2[j-1];
+                j--;
             }
         }
-        while(p>0) {
-            ans += s1[p-1];
-            p--;
+        while(i > 0) {
+            scs += str1[i-1];
+            i--;
         }
-        while(q>0) {
-            ans += s2[q-1];
-            q--;
+        while(j > 0) {
+            scs += str2[j-1];
+            j--;
         }
-        reverse(ans.begin(), ans.end());
-        return ans;
+        reverse(scs.begin(), scs.end());
+        return scs;
     }
 };
