@@ -1,40 +1,21 @@
 class Solution {
 private:
-    vector<int> divide(vector<int> &vec, int lo, int hi) {
-        if(lo == hi) return {vec[lo]};
-        int mid = (lo + ((hi - lo) / 2));
-        vector<int> u = divide (vec, lo, mid), v = divide (vec, mid + 1, hi);
-        return conquer(u, v);
+    vector<int> divide(vector<int> &v, int lo, int hi) {
+        if (lo == hi) return {v[lo]};
+        int mid = lo + (hi - lo) / 2;
+        vector<int> left = divide(v, lo, mid), right = divide(v, mid + 1, hi);
+        return conquer(left, right);
     }
     vector<int> conquer(vector<int> &u, vector<int> &v) {
-        int m = u.size(), n = v.size(), i = 0, j = 0, k = 0;
-        vector<int> ans(m + n);
-        while(i < m && j < n) {
-            if(u[i] < v[j]) {
-                ans[k] = u[i];
-                i++;
-            }
-            else {
-                ans[k] = v[j];
-                j++;
-            }
-            k++;
-        }
-        while(i < m) {
-            ans[k] = u[i];
-            i++;
-            k++;
-        }
-        while(j < n) {
-            ans[k] = v[j];
-            j++;
-            k++;
-        }
+        vector<int> ans;
+        int i = 0, j = 0;
+        while (i < u.size() && j < v.size()) ans.push_back(u[i] < v[j] ? u[i++] : v[j++]);
+        while (i < u.size()) ans.push_back(u[i++]);
+        while (j < v.size()) ans.push_back(v[j++]);
         return ans;
     }
 public:
     vector<int> sortArray(vector<int>& v) {
-        int n = v.size();
-        return divide(v, 0, n-1);
+        return divide(v, 0, v.size() - 1);
     }
 };
