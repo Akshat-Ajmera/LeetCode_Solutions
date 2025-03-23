@@ -1,39 +1,40 @@
 class Solution {
 private:
-    vector<int> merge_sort(vector<int> &v, int lo, int hi) {
-        if(lo == hi) {
-            return {v[lo]};
-        }
-        int mid = lo+(hi-lo)/2;
-        vector<int> u = merge_sort(v, lo, mid);
-        vector<int> w = merge_sort(v, mid+1, hi);
-        int u_siz = u.size(), w_siz = w.size(), i = 0, j = 0, k = 0;
-        vector<int> res(u_siz + w_siz);
-        while((i < u_siz) && (j < w_siz)) {
-            if(u[i] < w[j]) {
-                res[k] = u[i];
+    vector<int> divide(vector<int> &vec, int lo, int hi) {
+        if(lo == hi) return {vec[lo]};
+        int mid = (lo + ((hi - lo) / 2));
+        vector<int> u = divide (vec, lo, mid), v = divide (vec, mid + 1, hi);
+        return conquer(u, v);
+    }
+    vector<int> conquer(vector<int> &u, vector<int> &v) {
+        int m = u.size(), n = v.size(), i = 0, j = 0, k = 0;
+        vector<int> ans(m + n);
+        while(i < m && j < n) {
+            if(u[i] < v[j]) {
+                ans[k] = u[i];
                 i++;
             }
             else {
-                res[k] = w[j];
+                ans[k] = v[j];
                 j++;
             }
             k++;
         }
-        while(i < u_siz) {
-            res[k] = u[i];
+        while(i < m) {
+            ans[k] = u[i];
             i++;
             k++;
         }
-        while(j < w_siz) {
-            res[k] = w[j];
+        while(j < n) {
+            ans[k] = v[j];
             j++;
             k++;
         }
-        return res;
+        return ans;
     }
 public:
-    vector<int> sortArray(vector<int>& nums) {
-        return merge_sort(nums, 0, nums.size()-1);
+    vector<int> sortArray(vector<int>& v) {
+        int n = v.size();
+        return divide(v, 0, n-1);
     }
 };
