@@ -1,23 +1,17 @@
 class Solution {
 private:
-    int solve(vector<int> &p, vector<vector<vector<int>>> &dp, int i, int b, int c) {
-        if(!c || i==p.size()) {
-            return 0;
+    int solve(int i, int k, vector<int> &prices, vector<vector<int>> &dp) {
+        if(i == prices.size() || !k) return 0;
+        if(dp[i][k] != -1) return dp[i][k];
+        int bought = 0, notBought = solve(i + 1, k, prices, dp);
+        for(int j=i+1; j<prices.size(); j++) {
+            bought = max(bought, prices[j] - prices[i] + solve(j+1, k-1, prices, dp));
         }
-        if(dp[i][b][c] != -1) {
-            return dp[i][b][c];
-        }
-        if(b) {
-            return dp[i][b][c] = max(-p[i]+solve(p,dp,i+1,0,c), solve(p,dp,i+1,1,c));
-        }
-        else {
-            return dp[i][b][c] = max(p[i]+solve(p,dp,i+1,1,c-1), solve(p,dp,i+1,0,c));
-        }
+        return dp[i][k] = max(bought, notBought);
     }
 public:
     int maxProfit(int k, vector<int>& prices) {
-        int n = prices.size();
-        vector<vector<vector<int>>> dp(n, vector<vector<int>> (2, vector<int> (k+1, -1)));
-        return solve(prices,dp,0,1,k);
+        vector<vector<int>> dp(prices.size(), vector<int> (k+1, -1));
+        return solve(0, k, prices, dp);
     }
 };
