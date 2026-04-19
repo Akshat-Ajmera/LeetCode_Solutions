@@ -6,15 +6,11 @@ public:
         cnt = 0, val = value, K = k;
     }
     bool consec(int num) {
-        if(num != val) {
-            cnt = 0;
-            return false;
-        }
-        else {
+        if(num == val) {
             cnt++;
-            if(cnt >= K) return true;
-            else return false;
+            return (cnt >= K) ? true : false;
         }
+        else return cnt = 0;
     }
 };
 
