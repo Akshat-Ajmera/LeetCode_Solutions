@@ -3,7 +3,7 @@ private:
     int solve(vector<vector<int>>& grid, vector<vector<vector<int>>> &dp, int i, int j, int k) {
         if(i < 0 || j < 0 || k < 0) return -1e8;
         if(dp[i][j][k] != -1) return dp[i][j][k];
-        if(!i && !j) return grid[i][j] - (grid[i][j] ? 1 : 0);
+        if(!i && !j) return 0;
         int a = solve(grid, dp, i - 1, j, k - (grid[i][j] ? 1 : 0)) + grid[i][j];
         int b = solve(grid, dp, i, j - 1, k - (grid[i][j] ? 1 : 0)) + grid[i][j];
         return dp[i][j][k] = max(a, b);
